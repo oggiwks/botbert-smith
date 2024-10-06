@@ -1,0 +1,31 @@
+{
+  "name": "botbert-smith",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@discordjs/voice": "0.17.0",
+    "axios": "1.7.7",
+    "bufferutil": "4.0.8",
+    "discord.js": "14.16.3",
+    "dotenv": "16.4.5",
+    "openai": "4.67.1",
+    "typescript": "5.6.2",
+    "utf-8-validate": "6.0.4",
+    "winston": "3.14.2",
+    "zlib-sync": "0.1.9"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.7",
+    "prettier": "3.3.3",
+    "ts-node": "10.9.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon index.ts",
+    "lint": "prettier . --write",
+    "prestart": "npm run build",
+    "start": "node dist/index.js"
+  },
+  "private": true
+}
