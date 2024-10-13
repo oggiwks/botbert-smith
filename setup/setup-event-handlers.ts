@@ -15,7 +15,10 @@ export const setupEventHandlers = (client: Client): void => {
   });
 
   client.on(Events.GuildMemberAdd, async (member: GuildMember) => {
-    logger.info("a new member has joined!", { member });
+    logger.info("a new member has joined!", {
+      member: member.user.id,
+      name: member.user.displayName,
+    });
     await handleWelcome({
       client,
       member,

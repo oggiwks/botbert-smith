@@ -2,8 +2,6 @@ import { Client, EmbedBuilder, GuildMember } from "discord.js";
 import { logger } from "../utils/logger";
 import { getChannel, getRole, getServer } from "../utils/get";
 
-const WELCOME_MESSAGE = "";
-
 type WelcomeProps = {
   client: Client;
   member: GuildMember;
@@ -26,32 +24,20 @@ export const handleWelcome = async ({
     return;
   }
 
-  const channel = await getChannel(client, serverId, welcomeChannelName);
+  const channel =
+    (await getChannel(client, serverId, welcomeChannelName)) ??
+    (await getChannel(client, serverId, "general"));
 
-  if (!channel) {
-    logger.error("channel does not exist", { welcomeChannelName });
-    return;
-  }
-
-  if (channel.isSendable()) {
+  if (channel?.isSendable()) {
     const welcomeRole = getRole(client, serverId, welcomeRoleName);
-    if (!welcomeRole) {
-      logger.error("welcome role does not exist", { welcomeRoleName });
-      return;
+    if (welcomeRole) {
+      await member.roles.add(welcomeRole);
     }
-    await member.roles.add(welcomeRole);
 
     const embed = new EmbedBuilder();
     embed.setColor("#f00c63");
-    embed.setTitle(
-      "Welcome {member} to Is It Always Like This?".replace(
-        "{member}",
-        member.user.tag,
-      ),
-    );
-    embed.setDescription(
-      "Join us as we attempt to do a deep dive on the discography of The Cure!",
-    );
+    embed.setTitle(`Welcome ${member.user.displayName} to ${server.name}`);
+
     channel.send({ embeds: [embed] });
   }
 };
