@@ -6,7 +6,7 @@ type SearchProps = {
   page?: number;
 };
 
-export const search = async (
+export const handleSearch = async (
   query: string,
   { imageSearch = false, page = 1 }: SearchProps,
 ) => {

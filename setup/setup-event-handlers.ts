@@ -1,6 +1,6 @@
 import { Client, Events, Interaction, Message } from "discord.js";
 import { logger } from "../utils/logger";
-import { chatInputHandler } from "../handlers/chat-input";
+import { handleChatInput } from "../handlers/chat-input";
 import { getCommands } from "./get-commands";
 import { handleOpenAIInteraction } from "../handlers/openai";
 
@@ -26,7 +26,7 @@ export const setupEventHandlers = (client: Client): void => {
 
   client.on(Events.InteractionCreate, (interaction: Interaction) => {
     if (interaction.isChatInputCommand()) {
-      return chatInputHandler(interaction, getCommands());
+      return handleChatInput(interaction, getCommands());
     }
   });
 };

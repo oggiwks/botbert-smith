@@ -2,7 +2,7 @@ import { ChatInputCommandInteraction } from "discord.js";
 import { BotCommand } from "../types";
 import { logger } from "../utils/logger";
 
-export const chatInputHandler = async (
+export const handleChatInput = async (
   interaction: ChatInputCommandInteraction,
   commands: BotCommand[],
 ): Promise<void> => {

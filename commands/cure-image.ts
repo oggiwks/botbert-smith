@@ -1,6 +1,6 @@
 import { BotCommand } from "../types";
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import { search } from "../handlers/search";
+import { handleSearch } from "../handlers/search";
 import { getPseudoRandomFromRange } from "../utils/random";
 
 export const cureImageCommandBuilder = (): BotCommand => {
@@ -9,7 +9,7 @@ export const cureImageCommandBuilder = (): BotCommand => {
       .setName("cure-image")
       .setDescription("Return a random image of The Cure"),
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
-      const results = await search("The Cure band", {
+      const results = await handleSearch("The Cure band", {
         imageSearch: true,
         page: getPseudoRandomFromRange(1, 101),
       });
