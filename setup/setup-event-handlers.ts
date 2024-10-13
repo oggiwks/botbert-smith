@@ -1,8 +1,9 @@
-import { Client, Events, Interaction, Message } from "discord.js";
+import { Client, Events, GuildMember, Interaction, Message } from "discord.js";
 import { logger } from "../utils/logger";
 import { handleChatInput } from "../handlers/chat-input";
 import { getCommands } from "./get-commands";
 import { handleOpenAIInteraction } from "../handlers/openai";
+import { handleWelcome } from "../handlers/welcome";
 
 export const setupEventHandlers = (client: Client): void => {
   client.on(Events.ClientReady, () => {
@@ -11,6 +12,20 @@ export const setupEventHandlers = (client: Client): void => {
 
   client.on(Events.Error, (error: Error) => {
     logger.error("error handling event", { error, user: client.user?.tag });
+  });
+
+  client.on(Events.GuildMemberAdd, async (member: GuildMember) => {
+    logger.info("a new member has joined!", { member });
+    await handleWelcome({
+      client,
+      member,
+    });
+  });
+
+  client.on(Events.InteractionCreate, (interaction: Interaction) => {
+    if (interaction.isChatInputCommand()) {
+      return handleChatInput(interaction, getCommands());
+    }
   });
 
   client.on(Events.MessageCreate, async (message: Message) => {
@@ -22,11 +37,5 @@ export const setupEventHandlers = (client: Client): void => {
     }
 
     logger.info("received message", { message });
-  });
-
-  client.on(Events.InteractionCreate, (interaction: Interaction) => {
-    if (interaction.isChatInputCommand()) {
-      return handleChatInput(interaction, getCommands());
-    }
   });
 };

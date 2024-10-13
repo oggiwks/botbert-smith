@@ -13,7 +13,10 @@ const main = async (): Promise<void> => {
   const client = new Client({
     intents: [
       GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildInvites,
+      GatewayIntentBits.GuildMembers,
       GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.GuildPresences,
       GatewayIntentBits.MessageContent,
     ],
     shards: "auto",
