@@ -5,6 +5,7 @@ import { login } from "./setup/login";
 import { setupEventHandlers } from "./setup/setup-event-handlers";
 import { registerSlashCommands } from "./setup/register-slash-commands";
 import { getCommands } from "./setup/get-commands";
+import { setupDistube } from "./setup/setup-distube";
 
 const { DISCORD_CLIENT_ID = "NOT_SET", DISCORD_TOKEN = "NOT_SET" } =
   process.env;
@@ -17,6 +18,7 @@ const main = async (): Promise<void> => {
       GatewayIntentBits.GuildMembers,
       GatewayIntentBits.GuildMessages,
       GatewayIntentBits.GuildPresences,
+      GatewayIntentBits.GuildVoiceStates,
       GatewayIntentBits.MessageContent,
     ],
     shards: "auto",
@@ -29,11 +31,18 @@ const main = async (): Promise<void> => {
   });
 
   await login(client, DISCORD_TOKEN);
-  setupEventHandlers(client);
+
+  const distube = setupDistube(client);
+
+  setupEventHandlers(client, distube);
 
   const restClient = new REST().setToken(DISCORD_TOKEN);
 
-  await registerSlashCommands(getCommands(), restClient, DISCORD_CLIENT_ID);
+  await registerSlashCommands(
+    getCommands(distube),
+    restClient,
+    DISCORD_CLIENT_ID,
+  );
 };
 
 main();
