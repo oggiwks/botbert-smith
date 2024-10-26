@@ -6,8 +6,8 @@ import {
 import { logger } from "../../utils/logger";
 import { YouTubePlugin } from "@distube/youtube";
 import DisTube from "distube";
-import { addToQueueCommand } from "../../commands/music/add-to-queue";
 import { getQueueEmbed } from "../../utils/embeds";
+import SpotifyPlugin from "@distube/spotify";
 
 export type AddToQueueProps = {
   distube: DisTube;
@@ -25,6 +25,7 @@ export const handleAddToQueue = async ({
   voiceChannel,
 }: AddToQueueProps): Promise<void> => {
   const youtube = new YouTubePlugin();
+  const spotify = new SpotifyPlugin();
 
   try {
     const song = await youtube.searchSong(input, {});
@@ -53,6 +54,9 @@ export const handleAddToQueue = async ({
       embeds: [getQueueEmbed(queue ?? distube.getQueue(interaction))],
     });
   } catch (error) {
-    logger.error(error);
+    logger.error("Error while playing queue", {
+      message: (error as Error)?.message,
+      error,
+    });
   }
 };

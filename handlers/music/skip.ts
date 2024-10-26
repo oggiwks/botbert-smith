@@ -4,6 +4,7 @@ import {
   EmbedBuilder,
   VoiceChannel,
 } from "discord.js";
+import { getQueueEmbed } from "../../utils/embeds";
 
 export type SkipProps = {
   distube: DisTube;
@@ -30,5 +31,9 @@ export const handleSkip = async ({
         .setTitle("Botbert's Jukebox")
         .setDescription(`Skipped current song...`),
     ],
+  });
+
+  await interaction.followUp({
+    embeds: [getQueueEmbed(queue)],
   });
 };

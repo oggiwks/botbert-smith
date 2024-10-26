@@ -18,7 +18,7 @@ FROM base as build
 
 # Install packages needed to build node modules
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3 ffmpeg
+    apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
 
 # Install node modules
 COPY package-lock.json package.json ./
@@ -39,6 +39,9 @@ FROM base
 
 # Copy built application
 COPY --from=build /app /app
+
+# Install ffmpeg for distube
+RUN apt-get update -qq && apt-get install --no-install-recommends -y ffmpeg
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
