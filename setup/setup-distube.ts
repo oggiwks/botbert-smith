@@ -4,6 +4,8 @@ import SpotifyPlugin from "@distube/spotify";
 import SoundCloudPlugin from "@distube/soundcloud";
 import DeezerPlugin from "@distube/deezer";
 import { YouTubePlugin } from "@distube/youtube";
+import cookies from "../cookies.json";
+import ytdl from "@distube/ytdl-core";
 
 export const setupDistube = (client: Client): DisTube =>
   new DisTube(client, {
@@ -11,7 +13,9 @@ export const setupDistube = (client: Client): DisTube =>
       new SpotifyPlugin(),
       new SoundCloudPlugin(),
       new DeezerPlugin(),
-      new YouTubePlugin(),
+      new YouTubePlugin({
+        cookies: (cookies as ytdl.Cookie[]) ?? [],
+      }),
     ],
     emitAddListWhenCreatingQueue: true,
     emitAddSongWhenCreatingQueue: true,
