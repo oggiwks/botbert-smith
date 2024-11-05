@@ -1,20 +1,11 @@
-import DisTube from "distube";
-import {
-  ChatInputCommandInteraction,
-  EmbedBuilder,
-  VoiceChannel,
-} from "discord.js";
-import { getQueueEmbed } from "../../utils/embeds";
+import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
+import { getQueueEmbed } from "../../utils/music/embeds";
 
 export type SkipProps = {
-  distube: DisTube;
   interaction: ChatInputCommandInteraction;
 };
 
-export const handleSkip = async ({
-  distube,
-  interaction,
-}: SkipProps): Promise<void> => {
+export const handleSkip = async ({ interaction }: SkipProps): Promise<void> => {
   const queue = distube.getQueue(interaction);
 
   if (!queue || queue.songs.length < 1) {

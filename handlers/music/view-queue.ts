@@ -1,17 +1,14 @@
-import DisTube from "distube";
-import { ChatInputCommandInteraction, VoiceChannel } from "discord.js";
-import { getQueueEmbed } from "../../utils/embeds";
+import { ChatInputCommandInteraction } from "discord.js";
+import { getQueueEmbed } from "../../utils/music/embeds";
 
 export type ViewQueueProps = {
-  distube: DisTube;
   interaction: ChatInputCommandInteraction;
 };
 
 export const handleViewQueue = async ({
-  distube,
   interaction,
 }: ViewQueueProps): Promise<void> => {
-  const queue = distube.getQueue(interaction);
+  const queue = interaction.client;
 
   if (!queue || queue.songs.length < 1) {
     await interaction.reply(

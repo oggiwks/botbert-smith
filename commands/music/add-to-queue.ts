@@ -1,4 +1,3 @@
-import DisTube, { Queue } from "distube";
 import { BotCommand } from "../../types";
 import {
   ChatInputCommandInteraction,
@@ -7,7 +6,7 @@ import {
 } from "discord.js";
 import { handleAddToQueue } from "../../handlers/music/add-to-queue";
 
-export const addToQueueCommand = (distube: DisTube): BotCommand => {
+export const addToQueueCommand = (): BotCommand => {
   return {
     data: new SlashCommandBuilder()
       .setName("add-to-queue")
@@ -26,8 +25,6 @@ export const addToQueueCommand = (distube: DisTube): BotCommand => {
       ),
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
       const input = interaction.options.getString("input", true);
-      const position =
-        interaction.options.getInteger("position", false) ?? undefined;
 
       const voiceChannel = (interaction.member as GuildMember).voice.channel;
 

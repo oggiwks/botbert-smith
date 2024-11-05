@@ -4,9 +4,8 @@ import { handleChatInput } from "../handlers/chat-input";
 import { getCommands } from "./get-commands";
 import { handleOpenAIInteraction } from "../handlers/openai";
 import { handleWelcome } from "../handlers/welcome";
-import DisTube from "distube";
 
-export const setupEventHandlers = (client: Client, distube: DisTube): void => {
+export const setupEventHandlers = (client: Client): void => {
   client.on(Events.ClientReady, () => {
     logger.info("bot is now ready!!!");
   });
@@ -28,7 +27,7 @@ export const setupEventHandlers = (client: Client, distube: DisTube): void => {
 
   client.on(Events.InteractionCreate, (interaction: Interaction) => {
     if (interaction.isChatInputCommand()) {
-      return handleChatInput(interaction, getCommands(distube));
+      return handleChatInput(interaction, getCommands());
     }
   });
 

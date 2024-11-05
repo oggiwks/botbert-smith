@@ -4,13 +4,9 @@ import {
   VoiceBasedChannel,
 } from "discord.js";
 import { logger } from "../../utils/logger";
-import { YouTubePlugin } from "@distube/youtube";
-import DisTube from "distube";
-import { getQueueEmbed } from "../../utils/embeds";
-import SpotifyPlugin from "@distube/spotify";
+import { getQueueEmbed } from "../../utils/music/embeds";
 
 export type AddToQueueProps = {
-  distube: DisTube;
   input: string;
   interaction: ChatInputCommandInteraction;
   position?: number;
@@ -18,15 +14,11 @@ export type AddToQueueProps = {
 };
 
 export const handleAddToQueue = async ({
-  distube,
   input,
   interaction,
   position,
   voiceChannel,
 }: AddToQueueProps): Promise<void> => {
-  const youtube = new YouTubePlugin();
-  const spotify = new SpotifyPlugin();
-
   try {
     const song = await youtube.searchSong(input, {});
 
