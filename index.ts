@@ -5,7 +5,6 @@ import { login } from "./setup/login";
 import { setupEventHandlers } from "./setup/setup-event-handlers";
 import { registerSlashCommands } from "./setup/register-slash-commands";
 import { getCommands } from "./setup/get-commands";
-import { setupDistube } from "./setup/setup-distube";
 
 const { DISCORD_CLIENT_ID = "NOT_SET", DISCORD_TOKEN = "NOT_SET" } =
   process.env;
@@ -32,17 +31,11 @@ const main = async (): Promise<void> => {
 
   await login(client, DISCORD_TOKEN);
 
-  const distube = setupDistube(client);
-
-  setupEventHandlers(client, distube);
+  setupEventHandlers(client);
 
   const restClient = new REST().setToken(DISCORD_TOKEN);
 
-  await registerSlashCommands(
-    getCommands(distube),
-    restClient,
-    DISCORD_CLIENT_ID,
-  );
+  await registerSlashCommands(getCommands(), restClient, DISCORD_CLIENT_ID);
 };
 
 main();
