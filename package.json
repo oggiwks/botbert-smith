@@ -14,7 +14,7 @@
     "sodium-native": "4.2.2",
     "typescript": "5.6.3",
     "utf-8-validate": "6.0.4",
-    "winston": "3.15.0",
+    "winston": "3.16.0",
     "zlib-sync": "0.1.9"
   },
   "devDependencies": {
