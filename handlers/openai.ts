@@ -12,7 +12,7 @@ export const handleOpenAIInteraction = async (
 
   const params: OpenAI.Chat.ChatCompletionCreateParams = {
     messages: [{ role: "user", content: request }],
-    model: "gpt-3.5-turbo",
+    model: "gpt-4o-mini",
   };
 
   try {
